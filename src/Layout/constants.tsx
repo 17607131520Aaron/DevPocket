@@ -1,6 +1,5 @@
 import {
   ApiOutlined,
-  CodeOutlined,
   HomeOutlined,
   LogoutOutlined,
   SettingOutlined,
@@ -37,11 +36,6 @@ export const menuItems: NonNullable<MenuProps["items"]> = [
     key: "/network",
     icon: <ApiOutlined />,
     label: "网络",
-  },
-  {
-    key: "/mock-data",
-    icon: <CodeOutlined />,
-    label: "Mock 数据",
   },
 ];
 

@@ -59,3 +59,7 @@
 //   };
 // }
 // export default new UserServices();
+
+class UserServices{}
+
+export default new UserServices();

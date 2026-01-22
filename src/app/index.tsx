@@ -194,7 +194,6 @@ const AppContent: React.FC = () => {
             </Spin>
           </div>
         </Content>
-        {/*<div className="asp-comprehension-home-content-footer">我不知道写什么</div>*/}
       </Layout>
     </Layout>
   );
@@ -203,7 +202,6 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <TabsProvider>
-      {/*<MonitorInitializer />*/}
       <AppContent />
     </TabsProvider>
   );

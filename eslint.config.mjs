@@ -56,13 +56,12 @@ export default [
     },
     settings: {
       "import/resolver": {
+        node: {
+          extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".scss", ".css", ".sass", ".less"],
+        },
         typescript: {
           alwaysTryTypes: true,
           project: "./tsconfig.json",
-        },
-        alias: {
-          map: [["@", "./src"]],
-          extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".scss", ".css", ".less"],
         },
       },
     },
@@ -166,13 +165,12 @@ export default [
         version: "detect",
       },
       "import/resolver": {
+        node: {
+          extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".scss", ".css", ".sass", ".less"],
+        },
         typescript: {
           alwaysTryTypes: true,
           project: "./tsconfig.json",
-        },
-        alias: {
-          map: [["@", "./src"]],
-          extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".scss", ".css", ".less"],
         },
       },
     },
