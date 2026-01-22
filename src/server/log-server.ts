@@ -47,7 +47,7 @@ export class LogWebSocketServer {
    * @param port 监听端口，默认 8082
    * @param path WebSocket 路径，默认 '/logs'
    */
-  public start(port: number = 8082, path: string = "/logs"): void {
+  public start(port: number = this.port, path: string = this.path): void {
     if (this.isRunning) {
       console.warn("[Log Server] WebSocket 服务器已在运行");
       return;
@@ -177,10 +177,6 @@ export class LogWebSocketServer {
 
       // 根据消息类型处理
       if (parsedData.type === "js-log") {
-        // 日志消息
-        console.debug(
-          `[Log Server] 收到日志: [${parsedData.level}] ${(parsedData.message as string)?.substring(0, 50)}... (来自: ${clientInfo?.id})`,
-        );
         // 广播给所有客户端（除了发送者）
         this.broadcastToOthers(sender, messageStr);
       } else if (parsedData.type === "network-request") {
@@ -190,9 +186,6 @@ export class LogWebSocketServer {
           method?: string;
           url?: string;
         };
-        console.debug(
-          `[Log Server] 收到网络请求: ${requestData.method || "UNKNOWN"} ${requestData.url || "UNKNOWN"} (ID: ${requestData.id || "N/A"}, 来自: ${clientInfo?.id})`,
-        );
         // 广播给所有客户端（包括发送者，因为前端需要显示）
         this.broadcastToAll(messageStr);
       } else if (parsedData.type === "network-response") {
@@ -201,9 +194,6 @@ export class LogWebSocketServer {
           id?: string;
           status?: number;
         };
-        console.debug(
-          `[Log Server] 收到网络响应: 状态码 ${responseData.status || "N/A"} (请求ID: ${responseData.id || "N/A"}, 来自: ${clientInfo?.id})`,
-        );
         // 广播给所有客户端
         this.broadcastToAll(messageStr);
       } else if (parsedData.type === "network-error") {
@@ -212,14 +202,10 @@ export class LogWebSocketServer {
           id?: string;
           error?: string;
         };
-        console.debug(
-          `[Log Server] 收到网络错误: ${errorData.error || "Unknown error"} (请求ID: ${errorData.id || "N/A"}, 来自: ${clientInfo?.id})`,
-        );
         // 广播给所有客户端
         this.broadcastToAll(messageStr);
       } else {
         // 其他类型的消息，也广播给所有客户端
-        console.debug(`[Log Server] 收到消息: 类型 ${parsedData.type || "unknown"} (来自: ${clientInfo?.id})`);
         this.broadcastToAll(messageStr);
       }
     } catch (error) {
