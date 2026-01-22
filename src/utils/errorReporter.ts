@@ -135,22 +135,24 @@ export const withClientErrorGuard = <T extends (...args: unknown[]) => unknown>(
       const result = fn(...args) as ReturnType<T>;
       if (isPromiseLike(result)) {
         return result.catch((error: unknown) => {
+          const err = error as Error;
           reportClientIssue({
             type: "interaction-error",
             actionName,
-            message: (error as Error)?.message || safeStringify(error),
-            stack: (error as Error)?.stack,
+            message: err?.message || safeStringify(error),
+            ...(err?.stack && { stack: err.stack }),
           });
           throw error;
         }) as ReturnType<T>;
       }
       return result;
     } catch (error) {
+      const err = error as Error;
       reportClientIssue({
         type: "interaction-error",
         actionName,
-        message: (error as Error)?.message || safeStringify(error),
-        stack: (error as Error)?.stack,
+        message: err?.message || safeStringify(error),
+        ...(err?.stack && { stack: err.stack }),
       });
       throw error;
     }

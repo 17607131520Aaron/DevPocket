@@ -1,0 +1,197 @@
+.asp-tabs-bar {
+  position: relative;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+
+  &-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+    padding: 0 8px;
+    overflow: auto hidden;
+    scroll-behavior: smooth;
+
+    // 隐藏滚动条但保持滚动功能
+    // Webkit 浏览器（Chrome, Safari, Edge）
+    &::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    // Firefox 浏览器
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  &-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 30px;
+    font-size: 13px;
+    color: #1f2733;
+    background: transparent;
+    border-radius: 6px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    gap: 6px;
+    margin-right: 4px;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover {
+      background: transparent;
+
+      .asp-tabs-bar-item-close {
+        opacity: 1;
+      }
+    }
+
+    &.active {
+      font-weight: 500;
+      color: #237ffa; // 文本颜色改为蓝色
+      background: #ecf2fe; // 背景色
+
+      .asp-tabs-bar-item-refresh {
+        color: #237ffa; // 激活状态下刷新图标蓝色
+
+        &:hover {
+          color: #237ffa;
+          background: rgb(35 127 250 / 0.1);
+        }
+
+        &.refreshing {
+          color: #237ffa;
+        }
+      }
+    }
+
+    &-label {
+      flex: 1;
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 20px;
+    }
+
+    &-refresh {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 18px;
+      height: 18px;
+      font-size: 12px;
+      color: #1f2733;
+      border-radius: 50%;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      cursor: pointer;
+      opacity: 1; // 刷新图标始终显示
+
+      // 非激活状态下，鼠标悬停不显示效果
+      &:hover {
+        // 空，不显示hover效果
+      }
+
+      &.refreshing {
+        color: #1f2733;
+        animation: rotate 0.6s linear infinite;
+      }
+    }
+
+    &-close {
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 18px;
+      height: 18px;
+      font-size: 12px;
+      color: #8c8c8c;
+      border-radius: 50%;
+      transition: all 0.2s;
+      transform: translateY(-50%);
+      cursor: pointer;
+      opacity: 0; // 默认隐藏，悬停时显示
+
+      &:hover {
+        color: #ff4d4f;
+        background: rgb(255 77 79 / 0.1);
+        transform: translateY(-50%) scale(1.1);
+      }
+    }
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  &-actions {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    height: 100%;
+    padding: 0 8px;
+    border-left: 1px solid #f0f0f0;
+  }
+
+  &-action-item {
+    padding: 4px 12px;
+    font-size: 12px;
+    color: #595959;
+    border-radius: 4px;
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      color: #237ffa;
+      background: #f5f5f5;
+    }
+  }
+}
+
+// ========= 响应式适配 =========
+// 手机端：Tabs 更紧凑，允许横向滚动
+@media (width <= 768px) {
+  .asp-tabs-bar {
+    height: 36px;
+
+    &-container {
+      padding: 0 4px;
+    }
+
+    &-item {
+      max-width: 140px;
+      padding: 0 30px;
+      font-size: 12px;
+
+      &-label {
+        max-width: 90px;
+      }
+    }
+
+    &-actions {
+      padding: 0 4px;
+    }
+
+    &-action-item {
+      padding: 2px 8px;
+      font-size: 11px;
+    }
+  }
+}

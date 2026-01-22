@@ -2,6 +2,7 @@ import { Component } from "react";
 import type { ErrorInfo, ReactNode } from "react";
 
 import { reportClientIssue } from "@/utils/errorReporter";
+import "./index.module.scss";
 
 interface IErrorBoundaryProps {
   children: ReactNode;
@@ -44,45 +45,14 @@ class ErrorBoundary extends Component<IErrorBoundaryProps, IErrorBoundaryState> 
       }
 
       return (
-        <div
-          style={{
-            minHeight: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 12,
-            color: "#1f1f1f",
-            background: "#f5f5f5",
-          }}
-        >
-          <div style={{ fontSize: 18, fontWeight: 600 }}>页面出错了</div>
-          <div style={{ color: "#8c8c8c" }}>{this.state.message || "请稍后重试"}</div>
-          <div style={{ display: "flex", gap: 12 }}>
-            <button
-              style={{
-                padding: "8px 16px",
-                borderRadius: 6,
-                border: "1px solid #1677ff",
-                background: "#1677ff",
-                color: "#fff",
-                cursor: "pointer",
-              }}
-              onClick={() => window.location.reload()}
-            >
+        <div className={"errorContainer"}>
+          <div className={"errorTitle"}>页面出错了</div>
+          <div className={"errorMessage"}>{this.state.message || "请稍后重试"}</div>
+          <div className={"buttonGroup"}>
+            <button className={"reloadButton"} onClick={() => window.location.reload()}>
               刷新页面
             </button>
-            <button
-              style={{
-                padding: "8px 16px",
-                borderRadius: 6,
-                border: "1px solid #d9d9d9",
-                background: "#fff",
-                color: "#595959",
-                cursor: "pointer",
-              }}
-              onClick={this.handleRetry}
-            >
+            <button className={"retryButton"} onClick={this.handleRetry}>
               重试
             </button>
           </div>
