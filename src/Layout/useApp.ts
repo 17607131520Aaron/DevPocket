@@ -125,18 +125,21 @@ const useApp = (): IUseAppReturn => {
 
   // 用户菜单点击处理
   const handleUserMenuClick = ({ key }: { key: string }): void => {
-    if (key === "logout") {
-      // 处理退出登录逻辑
-      void logout().then(() => {
-        navigate("/login", { replace: true });
-      });
-    } else if (key === "profile") {
-      // 处理个人中心跳转
-      navigate("/profile");
-    } else if (key === "settings") {
-      // 处理账户设置跳转
-      navigate("/settings/basic");
-    }
+    // if (key === "logout") {
+    //   // 处理退出登录逻辑
+    //   void logout().then(() => {
+    //     navigate("/login", { replace: true });
+    //   });
+    // } else if (key === "profile") {
+    //   // 处理个人中心跳转
+    //   navigate("/profile");
+    // } else if (key === "settings") {
+    //   // 处理账户设置跳转
+    //   navigate("/settings/basic");
+    // }
+
+    console.log(key, 'key');
+
   };
 
   return {

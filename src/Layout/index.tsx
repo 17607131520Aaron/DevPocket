@@ -1,17 +1,24 @@
 import React from "react";
 
+import { Outlet } from "react-router-dom";
+
 import {
   AppstoreOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
   SearchOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import { Input, Layout, List, Menu } from "antd";
+import { Avatar, Dropdown, Input, Layout, List, Menu, Space, Typography } from "antd";
 
+import { userMenuItems } from "./constants";
 import useApp from "./useApp";
 
 import type { IFlatMenuItem } from "./type"
 
 import "./index.scss";
-const { Sider } = Layout;
+const { Header, Sider, Content } = Layout;
+const { Text } = Typography;
 
 const LayoutPages: React.FC = () => {
   const {
@@ -24,7 +31,8 @@ const LayoutPages: React.FC = () => {
     handleMenuClick,
     handleOpenChange,
     selectedKeys,
-    flatSearchResults
+    flatSearchResults,
+    handleUserMenuClick
   } = useApp();
 
   //判断是否显示搜索结果
@@ -104,7 +112,37 @@ const LayoutPages: React.FC = () => {
           />
           </div>}
       </Sider>
-      <Layout className="devpocket-content" />
+      <Layout className="devpocket-content" >
+        <Header className="devpocket-content-header">
+          <div className="devpocket-content-header-content">
+            <div className="devpocket-content-header-left">
+              <div className="devpocket-content-header-toggle" onClick={() => handleComplete(!collapsed)}>
+                {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              </div>
+            </div>
+            <div className="devpocket-content-header-center" />
+            <div className="devpocket-content-header-right">
+              <Space size="middle">
+                <Dropdown
+                  menu={{
+                    items: userMenuItems,
+                    onClick: handleUserMenuClick,
+                  }}
+                  placement="bottomRight"
+                >
+                  <Space className="devpocket-content-header-content-user" style={{ cursor: "pointer" }}>
+                    <Avatar icon={<UserOutlined />} size={32} style={{ backgroundColor: "#237ffa" }} />
+                    <Text style={{ fontSize: 14, color: "#595959" }}>{'管理员'}</Text>
+                  </Space>
+                </Dropdown>
+              </Space>
+            </div>
+          </div>
+        </Header>
+        <Content className="devpocket-content-content">
+          <Outlet />
+        </Content>
+      </Layout>
     </div>
   );
 };
