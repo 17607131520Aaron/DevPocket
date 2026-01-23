@@ -4,9 +4,11 @@ import {
   AppstoreOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { Input, Layout, Menu } from "antd";
+import { Input, Layout, List, Menu } from "antd";
 
 import useApp from "./useApp";
+
+import type { IFlatMenuItem } from "./type"
 
 import "./index.scss";
 const { Sider } = Layout;
@@ -24,6 +26,9 @@ const LayoutPages: React.FC = () => {
     selectedKeys,
     flatSearchResults
   } = useApp();
+
+  //判断是否显示搜索结果
+  const showSearchResults = searchValue.trim() && !collapsed;
 
   return (
     <div className="devpocket-pages">
@@ -48,7 +53,7 @@ const LayoutPages: React.FC = () => {
           </div>
         </div>
 
-        {!collapsed ? <div className="devpocket-sider-search">
+        {!collapsed && <div className="devpocket-sider-search">
           <Input
             allowClear
             placeholder="搜索菜单"
@@ -56,18 +61,36 @@ const LayoutPages: React.FC = () => {
             value={searchValue}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearchChange(e.target.value)}
           />
-        </div> :
-          <div className="devpocket-sider-search-collapsed">
-            <div
-              className="devpocket-sider-search-icon"
-              onClick={() => {
-                handleComplete(false);
-              }}
-            >
-              <SearchOutlined />
-            </div>
-          </div>}
+        </div>}
 
+        {showSearchResults ? <div className="devpocket-sider-search-results">
+          <div className="devpocket-sider-search-results-count">
+            共搜索到 {flatSearchResults.length} 项与"{searchValue}"相关的菜单
+          </div>
+          <List<IFlatMenuItem>
+            className="devpocket-sider-search-results-list"
+            dataSource={flatSearchResults}
+            renderItem={(item: IFlatMenuItem) => (
+              <List.Item
+                className={`devpocket-sider-search-result-item ${selectedKeys.includes(item.key) ? "devpocket-sider-search-result-item-selected" : ""
+                  }`}
+                onClick={() => {
+                  if (item.key.startsWith("/")) {
+                    handleMenuClick({ key: item.key });
+                  }
+                }}
+              >
+                <div className="devpocket-sider-search-result-content">
+                  {item.icon && <span className="devpocket-sider-search-result-icon">{item.icon}</span>}
+                  <span className="devpocket-sider-search-result-label">
+                    {item.parentLabel ? `${item.parentLabel} / ${item.label}` : item.label}
+                  </span>
+                </div>
+              </List.Item>
+            )}
+          />
+        </div>
+          :
         <div className="devpocket-sider-menu">
           <Menu
             className="asp-comprehension-home-menu-content"
@@ -79,7 +102,7 @@ const LayoutPages: React.FC = () => {
             onClick={handleMenuClick}
             onOpenChange={handleOpenChange}
           />
-        </div>
+          </div>}
       </Sider>
       <Layout className="devpocket-content" />
     </div>
