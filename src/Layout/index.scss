@@ -110,6 +110,54 @@
       padding: 8px 12px;
       color: var(--color-text-secondary, #595959);
       font-size: 14px;
+      .ant-input {
+        border-radius: 6px;
+        border-color: var(--color-border, #d9d9d9);
+        transition: all 0.2s;
+
+        &:hover {
+          border-color: var(--color-primary);
+        }
+
+        &:focus {
+          border-color: var(--color-primary);
+          box-shadow: 0 0 0 2px rgb(35 127 250 / 0.1);
+        }
+      }
+
+      .anticon-search {
+        color: var(--color-text-tertiary, #8c8c8c);
+      }
+    }
+
+    &-search-collapsed {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px;
+      flex-shrink: 0;
+
+      &-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        color: var(--color-text-secondary, #595959);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+          color: var(--color-primary, #237ffa);
+          background: rgb(35 127 250 / 0.08);
+        }
+
+        &:active {
+          background: rgb(35 127 250 / 0.12);
+        }
+      }
     }
 
     &-menu{

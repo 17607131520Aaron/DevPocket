@@ -1,6 +1,9 @@
-import { app, BrowserWindow } from 'electron';
 import path from 'node:path';
+
+import { app, BrowserWindow } from 'electron';
+
 import started from 'electron-squirrel-startup';
+
 import { startLogServer, stopLogServer } from "./server/log-server";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.

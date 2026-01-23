@@ -1,9 +1,13 @@
 import React from "react";
 
-import { AppstoreOutlined, SearchOutlined } from "@ant-design/icons";
-import { Layout, Input, Menu } from "antd";
+import {
+  AppstoreOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
+import { Input, Layout, Menu } from "antd";
 
 import useApp from "./useApp";
+
 import "./index.scss";
 const { Sider } = Layout;
 
@@ -18,6 +22,7 @@ const LayoutPages: React.FC = () => {
     handleMenuClick,
     handleOpenChange,
     selectedKeys,
+    flatSearchResults
   } = useApp();
 
   return (
@@ -39,10 +44,11 @@ const LayoutPages: React.FC = () => {
             <div className="devpocket-sider-header-logo-icon">
               <AppstoreOutlined />
             </div>
-            <div className="devpocket-sider-header-logo-title">我不知道叫什么</div>
+            {!collapsed && <div className="devpocket-sider-header-logo-title">我不知道叫什么</div>}
           </div>
         </div>
-        <div className="devpocket-sider-search">
+
+        {!collapsed ? <div className="devpocket-sider-search">
           <Input
             allowClear
             placeholder="搜索菜单"
@@ -50,7 +56,18 @@ const LayoutPages: React.FC = () => {
             value={searchValue}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearchChange(e.target.value)}
           />
-        </div>
+        </div> :
+          <div className="devpocket-sider-search-collapsed">
+            <div
+              className="devpocket-sider-search-icon"
+              onClick={() => {
+                handleComplete(false);
+              }}
+            >
+              <SearchOutlined />
+            </div>
+          </div>}
+
         <div className="devpocket-sider-menu">
           <Menu
             className="asp-comprehension-home-menu-content"
