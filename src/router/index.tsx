@@ -8,6 +8,7 @@ const Home = lazy(() => import("@/pages/Home"));
 const SmartserviceappDebugLogs = lazy(() => import("@/pages/DebugLogs"));
 const SmartserviceappDebugNetwork = lazy(() => import("@/pages/Netword"));
 const MockDataPlatform = lazy(() => import("@/pages/MockData"));
+const NetworkLogs = lazy(() => import("@/pages/network-logs"));
 
 const router: DataRouter = createHashRouter([
   {
@@ -26,6 +27,10 @@ const router: DataRouter = createHashRouter([
       {
         path: "/mock-data",
         element: <MockDataPlatform />,
+      },
+      {
+        path: "/network-logs",
+        element: <NetworkLogs />,
       },
     ],
   },

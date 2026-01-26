@@ -14,3 +14,5 @@ export type { INetworkStore } from "./networkStore";
 
 export { useDebugLogsStore } from "./debugLogsStore";
 export type { IDebugLogsStore } from "./debugLogsStore";
+
+export { appStore } from "./appStore/appStore";

@@ -8,8 +8,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import type { ConnectionState, IUseWebSocketOptions, IUseWebSocketReturn } from "./type";
 import { setupWebSocketHandlers } from "./utils";
+
+import type { ConnectionState, IUseWebSocketOptions, IUseWebSocketReturn } from "./type";
 
 export const useWebSocket = (options: IUseWebSocketOptions): IUseWebSocketReturn => {
   const {

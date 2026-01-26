@@ -35,8 +35,6 @@ export default defineConfig({
           "react-vendor": ["react", "react-dom", "react-router-dom"],
           // Ant Design 单独打包
           "antd-vendor": ["antd", "@ant-design/icons"],
-          // ECharts 单独打包（按需加载）
-          "echarts-vendor": ["echarts", "echarts-for-react"],
           // 其他工具库
           "utils-vendor": ["axios", "dayjs", "zustand", "ahooks"],
         },

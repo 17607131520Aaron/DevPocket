@@ -15,18 +15,6 @@ export const menuItems: NonNullable<MenuProps["items"]> = [
     icon: <HomeOutlined />,
     label: "首页",
   },
-  // {
-  //   key: "barcode",
-  //   icon: <BarChartOutlined />,
-  //   label: "条码管理",
-  //   children: [
-  //     {
-  //       key: "/barcode/manage",
-  //       icon: <BarChartOutlined />,
-  //       label: "条码生成",
-  //     },
-  //   ],
-  // },
   {
     key: "/debuglogs",
     icon: <UnorderedListOutlined />,
@@ -36,6 +24,11 @@ export const menuItems: NonNullable<MenuProps["items"]> = [
     key: "/network",
     icon: <ApiOutlined />,
     label: "网络",
+  },
+  {
+    key: "/network-logs",
+    icon: <UnorderedListOutlined />,
+    label: "网络日志",
   },
 ];
 

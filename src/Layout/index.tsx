@@ -9,10 +9,9 @@ import {
   SearchOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Dropdown, Input, Layout, List, Menu, Space, Typography } from "antd";
+import { Avatar, Input, Layout, List, Menu, Space, Typography } from "antd";
 
-import { userMenuItems } from "./constants";
-import useApp from "./useApp";
+import useLayoutPages from "./useLayoutPages";
 
 import type { IFlatMenuItem } from "./type"
 
@@ -26,14 +25,13 @@ const LayoutPages: React.FC = () => {
     searchValue,
     openKeys,
     filteredMenuItems,
+    flatSearchResults,
     handleComplete,
     handleSearchChange,
     handleMenuClick,
     handleOpenChange,
-    selectedKeys,
-    flatSearchResults,
-    handleUserMenuClick
-  } = useApp();
+    // selectedKeys,
+  } = useLayoutPages();
 
   //判断是否显示搜索结果
   const showSearchResults = searchValue.trim() && !collapsed;
@@ -123,18 +121,10 @@ const LayoutPages: React.FC = () => {
             <div className="devpocket-content-header-center" />
             <div className="devpocket-content-header-right">
               <Space size="middle">
-                <Dropdown
-                  menu={{
-                    items: userMenuItems,
-                    onClick: handleUserMenuClick,
-                  }}
-                  placement="bottomRight"
-                >
-                  <Space className="devpocket-content-header-content-user" style={{ cursor: "pointer" }}>
-                    <Avatar icon={<UserOutlined />} size={32} style={{ backgroundColor: "#237ffa" }} />
-                    <Text style={{ fontSize: 14, color: "#595959" }}>{'管理员'}</Text>
-                  </Space>
-                </Dropdown>
+                <Space className="devpocket-content-header-content-user" style={{ cursor: "pointer" }}>
+                  <Avatar icon={<UserOutlined />} size={32} style={{ backgroundColor: "#237ffa" }} />
+                  <Text style={{ fontSize: 14, color: "#595959" }}>{'管理员'}</Text>
+                </Space>
               </Space>
             </div>
           </div>

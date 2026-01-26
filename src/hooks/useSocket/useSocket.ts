@@ -6,10 +6,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { io } from "socket.io-client";
 
-import type { ConnectionState, IEmitResult, IUseSocketOptions, IUseSocketReturn } from "./type";
 import { socketCache } from "./utils";
 
-import type { SocketOptions as IOSocketOptions, ManagerOptions, Socket } from "socket.io-client";
+import type {
+  ConnectionState,
+  IEmitResult,
+  ISocketConfigForIO,
+  IUseSocketOptions,
+  IUseSocketReturn,
+} from "./type";
+import type { Socket } from "socket.io-client";
 
 export const useSocket = (options: IUseSocketOptions): IUseSocketReturn => {
   const { url, autoConnect = true, ...socketOptions } = options;
@@ -29,8 +35,8 @@ export const useSocket = (options: IUseSocketOptions): IUseSocketReturn => {
       cached.refCount += 1;
       socketRef.current = cached.socket;
     } else {
-      // 创建新连接
-      const socketConfig: Partial<ManagerOptions & IOSocketOptions> = {
+      // 创建新连接（使用 ISocketConfigForIO 允许可选为 undefined，兼容 exactOptionalPropertyTypes）
+      const socketConfig: ISocketConfigForIO = {
         autoConnect: false,
         auth: socketOptions.auth,
         extraHeaders: socketOptions.extraHeaders,
@@ -41,7 +47,7 @@ export const useSocket = (options: IUseSocketOptions): IUseSocketReturn => {
         reconnectionDelay: socketOptions.reconnectionDelay ?? 1000,
         timeout: socketOptions.timeout ?? 20000,
       };
-      const newSocket = io(url, socketConfig);
+      const newSocket = io(url, socketConfig as Parameters<typeof io>[1]);
 
       socketCache.set(url, { socket: newSocket, refCount: 1 });
       socketRef.current = newSocket;

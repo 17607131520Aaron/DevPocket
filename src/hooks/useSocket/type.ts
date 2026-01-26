@@ -1,4 +1,4 @@
-import type { Socket } from "socket.io-client";
+import type { ManagerOptions, Socket, SocketOptions } from "socket.io-client";
 
 /** 连接状态 */
 export type ConnectionState = "connecting" | "connected" | "disconnected" | "error";
@@ -97,6 +97,20 @@ export interface IUseSocketReturn {
   emitWithAck: <T = unknown>(event: string, data?: unknown, timeout?: number) => Promise<IEmitResult<T>>;
 }
 
+/**
+ * 供 io() 使用的配置类型（构建时可选属性允许为 undefined，兼容 exactOptionalPropertyTypes）
+ * 传给 io() 时需断言为 Partial<ManagerOptions & SocketOptions>
+ */
+export type ISocketConfigForIO = Omit<
+  Partial<ManagerOptions & SocketOptions>,
+  "auth" | "path" | "query" | "extraHeaders"
+> & {
+  auth?: Record<string, unknown> | undefined;
+  path?: string | undefined;
+  query?: Record<string, string> | undefined;
+  extraHeaders?: Record<string, string> | undefined;
+};
+
 /** WebSocket 配置选项 */
 export interface IUseWebSocketOptions {
   /** WebSocket 服务器 URL（ws:// 或 wss://） */
@@ -181,11 +195,12 @@ export interface ISetupHandlersParams {
   immediateReconnect: boolean;
   reconnectAttempts: number;
   createWebSocket: () => WebSocket | null;
-  callbacksRef: React.MutableRefObject<{
-    onOpen?: (event: Event) => void;
-    onClose?: (event: CloseEvent) => void;
-    onError?: (event: Event) => void;
-    onMessage?: (event: MessageEvent) => void;
+  callbacksRef: React.RefObject<{
+    onOpen?: ((event: Event) => void) | undefined;
+    onClose?: ((event: CloseEvent) => void) | undefined;
+    onError?: ((event: Event) => void) | undefined;
+    onMessage?: ((event: MessageEvent) => void) | undefined;
+    onStateChange?: ((state: ConnectionState) => void) | undefined;
   }>;
   messageHandlersRef: React.MutableRefObject<Map<string, Set<(event: MessageEvent) => void>>>;
   reconnectAttemptsRef: React.MutableRefObject<number>;
